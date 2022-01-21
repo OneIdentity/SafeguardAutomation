@@ -1,6 +1,8 @@
 ; ONLY FOR DEMO USE
+; Created to work with SPS 6.12 or later where multiple authentication backends are configured.
+;
 ; Compile with Aut2exe to ensure the include files are added too
-; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_SPS.exe --args {username} {password} {asset}
+; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_SPS_local_user.exe --args "{username} {password} {asset}"
 
 Opt("TrayAutoPause", 0)
 Opt("TrayIconDebug", 0)
@@ -33,20 +35,26 @@ _WD_ConsoleVisible(false)
 ; Navigate to asset website
 _WD_Navigate($sSession, 'https://' & $asset & $domainSuffix )
 
-; Set the username field of the login form
-$userFieldXPath = '/html/body/app/sg-shell/div/main/div/login-page/div/mat-card/basic-login/form/div/mat-form-field[1]/div/div[1]/div[4]/input'
+; Open the local login prompt
+$localLoginXPath = '/html/body/main/div[2]/div[4]/div[3]/div/small/a'
+$localLoginPrompt = _WD_FindElement($sSession, $_WD_LOCATOR_ByXPath, $localLoginXPath)
+_WD_ElementAction($sSession, $localLoginPrompt, 'click')
+
+
+; Set the username field of the local login form
+$userFieldXPath = '/html/body/main/div[2]/div[4]/div[3]/div/div/div/form/div[1]/input'
 $userField = _WD_FindElement($sSession, $_WD_LOCATOR_ByXPath, $userFieldXPath)
 _WD_ElementAction($sSession, $userField, 'value', $username)
 
 
 ; Set the password field of the login form
-$passwordFieldXPath = '/html/body/app/sg-shell/div/main/div/login-page/div/mat-card/basic-login/form/div/mat-form-field[2]/div/div[1]/div[4]/input'
+$passwordFieldXPath = '/html/body/main/div[2]/div[4]/div[3]/div/div/div/form/div[2]/input'
 $passwordField = _WD_FindElement($sSession, $_WD_LOCATOR_ByXPath, $passwordFieldXPath)
 _WD_ElementAction($sSession, $passwordField, 'value', $password)
 
 
 ; Click the login button
-$loginButtonXPath = '/html/body/app/sg-shell/div/main/div/login-page/div/mat-card/basic-login/form/div/div/button'
+$loginButtonXPath = '/html/body/main/div[2]/div[4]/div[3]/div/div/div/form/div[3]/button[2]'
 $loginButton = _WD_FindElement($sSession, $_WD_LOCATOR_ByXPath, $loginButtonXPath)
 _WD_ElementAction($sSession, $loginButton, 'click')
 
