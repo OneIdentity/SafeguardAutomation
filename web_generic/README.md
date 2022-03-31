@@ -1,7 +1,7 @@
 # Web Application login for arbitrary web applications
 Only for demo use.
 
-The web applications needs to show the username and the password input fields and the login button directly on the URL accessible via https://asset.example.com:1234 where the <asset> and the ".example.com:1234" <urlSuffix> are given in the parameters of the published Safeguard RemoteApp Launcher.
+The web applications needs to show the username and the password input fields and the login button directly on the URL accessible via https://asset.example.com:1234 where the 'asset' and the ".example.com:1234" 'urlSuffix' are given in the parameters of the published Safeguard RemoteApp Launcher.
 The CSS selectors of the username, password, login objects are also passed via the parameters of the published Safeguard RemoteApp Launcher.
 
 Built with AutoIT v3
