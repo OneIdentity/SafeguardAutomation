@@ -1,7 +1,5 @@
-# safeguard-autoit
-AutoIt plugins to use with Safeguard for Privileged Passwords
-
-This project a project still in the planning / early development stages ...
+# SafeguardAutomation
+Automation tools for building solutions with One Identity Safeguard
 
 ## Support
 
