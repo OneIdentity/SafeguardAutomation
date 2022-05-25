@@ -1,12 +1,13 @@
 ﻿#############
 ### USAGE
 # The script has been tested with session-initiated workflow, changes may be required for the portal-initiated workflow.
+# The script uses the apps.csv file as an input, located next to the script.
 # The script publishes new applications, it does not unpublish or change existing published applications with the same DisplayName.
 # The script configures the necessary RDP settings that are required to make Safeguard Privileged App Auto-logon work.
 # The script will use the default Launcher path, change it below if required.
 # Set below the name of the collection where apps will be published to.
 # An Icon must be set in CSV, you may use the safeguard.ico provided with the package as a fallback for new applications. Change the icon path in the CSV accordingly.
-# User grops: If unset in CSV, the default setting will be used (all users have access). If set, groups should be separated with colon (:). Publishing will fail if a non-existent AD group is given in the CSV file.
+# User grops: If unset in CSV, the default setting will be used (all users have access). If set, groups should be separated with colon (:). Publishing will fail if a non-existent AD group is given in the CSV file, change the sample in the CSV accordingly.
 # RDP properties: adjust the variable below as necessary. WARNING: if any custom RDP properties are already set, those will be overwritten.
 
 
