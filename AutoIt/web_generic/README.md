@@ -1,12 +1,9 @@
 # Web Application login for arbitrary web applications
 Only for demo use.
 
-The web applications needs to show the username and the password input fields and the login button directly on the URL accessible via https://asset.example.com:1234 where the 'asset' and the ".example.com:1234" 'urlSuffix' are given in the parameters of the published Safeguard RemoteApp Launcher.
-The CSS selectors of the username, password, login objects are also passed via the parameters of the published Safeguard RemoteApp Launcher.
+See guidance for usage in the au3 script and the executable itself under Releases.
 
 Built with AutoIT v3
-
-Tested with Chrome v96 and SPS 6.11 on Windows Server 2016.
 
 Make sure you build the exe using the Aut2exe tool to ensure the included files are packaged too in the exe.
 
