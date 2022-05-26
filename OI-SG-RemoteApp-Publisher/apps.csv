@@ -1,4 +1,5 @@
 DisplayName,Folder,Parameters,IconPath,UserGroups
+SQL Studio,Safeguard auto-logon,--cmd "C:\AutoIT\sqlstudio.exe" --args "{username} {password} {asset}" --enable-debug,C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\ssms.ico,
 DBeaver MySQL SG-auto,Safeguard auto-logon,--cmd "C:\Program Files\DBeaver\dbeaver.exe" --args "-con name=SG-MySQL-autologon|driver=mysql|user={username}|password={password}|host={asset}" --enable-debug,C:\Program Files\DBeaver\dbeaver.exe,Domain Users:Sample Group:Sample Group 2
 DBeaver MSSQL SG-auto,Safeguard auto-logon,--cmd "C:\Program Files\DBeaver\dbeaver.exe" --args "-con name=SG-MSSQL-autologon|driver=mssql_ms|user={username}|password={password}|database=master|host={asset}" --enable-debug,C:\Program Files\DBeaver\dbeaver.exe,
 DBeaver Oracle SG-auto,Safeguard auto-logon,--cmd "C:\Program Files\DBeaver\dbeaver.exe" --args "con name=SG-Oracle-autologon|driver=oracle_thin|url=jdbc:oracle:thin:@{asset}:1521:oracle|user={username}|password={password}" --enable-debug,C:\Program Files\DBeaver\dbeaver.exe,
