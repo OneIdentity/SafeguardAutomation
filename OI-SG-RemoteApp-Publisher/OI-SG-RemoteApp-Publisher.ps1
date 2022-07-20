@@ -95,15 +95,11 @@ Write-Output "`nCurrent RDSessionCollectionConfiguration is:`n$($rdconfig.Custom
 Write-Output "Required custom RDP properties are:`n$($customRDPProperties -join "`n")"
 $properties=""
 foreach ($property in $customRDPProperties) {
-    if ($rdconfig.CustomRdpProperty.Contains($property)) {
-        Write-Output "`nProperty: $($property) is already configured. Skipping"
-    } else {
-        Write-Output "`nAdding $($property) to custom RDP properties"
-        if($properties -ne '') {
-            $properties+="`n"
-        }
-        $properties+=$property
+    Write-Output "`nAdding $($property) to custom RDP properties"
+    if($properties -ne '') {
+        $properties+="`n"
     }
+    $properties+=$property
 }
 if ($properties -ne "") {
     Write-Output "`nSetting custom RDP properties:`n$($properties)"
