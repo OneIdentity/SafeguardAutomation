@@ -95,7 +95,7 @@ Write-Output "`nCurrent RDSessionCollectionConfiguration is:`n$($rdconfig.Custom
 Write-Output "Required custom RDP properties are:`n$($customRDPProperties -join "`n")"
 $properties=""
 foreach ($property in $customRDPProperties) {
-    Write-Output "`nAdding $($property) to custom RDP properties"
+    Write-Output "`nAdding $($property) to RDP properties"
     if($properties -ne '') {
         $properties+="`n"
     }
