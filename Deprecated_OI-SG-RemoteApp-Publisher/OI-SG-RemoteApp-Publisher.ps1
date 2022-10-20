@@ -1,4 +1,9 @@
-﻿#############
+﻿# DEPRECATED
+# This publisher was created for session initiated setup with Safeguard 6.12 and 6.13. Feel free to use the samples though from apps.csv
+
+
+
+#############
 ### USAGE
 # The script has been tested with session-initiated workflow, changes may be required for the portal-initiated workflow.
 # The script uses the apps.csv file as an input, located next to the script.

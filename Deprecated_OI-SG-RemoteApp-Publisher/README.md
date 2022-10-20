@@ -1,3 +1,6 @@
+# DEPPRECATED
+This publisher was created for session initiated setup with Safeguard 6.12 and 6.13. Feel free to use the samples though from apps.csv
+
 # Helper script for configuring the Safeguard Launcher in RemoteApp
 
 See the comments in the beginning of the script for guidance.
