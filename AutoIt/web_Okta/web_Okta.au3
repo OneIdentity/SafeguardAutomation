@@ -1,7 +1,7 @@
 ; ONLY FOR DEMO USE
 ;
 ; Compile with Aut2exe to ensure the include files are added too
-; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_Okta.exe --args "<debug=0|1> <browser:chrome|edge> <target> {username} {password} {asset}"
+; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_Okta.exe --args "<debug=0|1> <browser:chrome|firefox> <target> {username} {password} {asset}"
 ;
 ;
 ; Input parameters:
