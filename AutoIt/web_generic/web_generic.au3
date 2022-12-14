@@ -2,7 +2,7 @@
 ;
 ; Compile with Aut2exe to ensure the include files are compiled too
 ;
-; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <browser=firefox|chrome|edge> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||c::css4 {asset}"
+; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <firefox|chrome|edge> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||c::css4 {asset}"
 ;
 ; Altough the code supports Firefox (needs geckodriver.exe) and Edge (needs msedgedriver.exe) too:
 ; - Edge has not been tested at all
