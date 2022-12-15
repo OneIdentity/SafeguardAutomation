@@ -5,5 +5,6 @@ DBeaver MSSQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name
 DBeaver Oracle,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "con name=SG-Oracle-autologon|driver=oracle_thin|url=jdbc:oracle:thin:@{asset}:1521:oracle|user={username}|password={password}"
 Azure Portal,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome portal.azure.com v::#i0116::{username}||c::#idSIButton9||s::#i0118::{password}||c::#idSIButton9||c::#idBtn_Back {asset}"
 Splunk,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} splunk.example.com:8000 #username #password #password input.splButton-primary.btn.btn-primary"
+Splunk,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome splunk.oneidentity.work:443 v::#username::{username}||s::#password::{password}||c::input.splButton-primary.btn.btn-primary {asset}"
 SPS default local user,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} sps.example.com #local-username #local-password #password button.primary"
 AWS non-root,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} signin.aws.amazon.com/console #resolving_input #password #signin_button #next_button"
