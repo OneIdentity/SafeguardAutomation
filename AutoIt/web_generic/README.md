@@ -1,7 +1,7 @@
 # Web Application login for arbitrary web applications
 Only for demo use.
 
-See guidance for usage in the au3 script and the executable itself under Releases.
+See guidance for usage in the au3 script and under Releases.
 
 Built with AutoIT v3
 
