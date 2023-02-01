@@ -1,5 +1,6 @@
 Application,Tested Safeguard Version,CMD Executable,Args Parameter
 SQL Studio,7.0,--cmd "C:\AutoIT\sqlstudio.exe",--args "{username} {password} {asset}"
+SQL Studio via SPS,7.1,--cmd "C:\AutoIT\sqlstudio_v2.exe",--args "1 ssmsfolder {username} {password} {asset} 192.168.1.1"
 DBeaver MySQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MySQL-autologon|driver=mysql|user={username}|password={password}|host={asset}"
 DBeaver MSSQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MSSQL-autologon|driver=mssql_ms|user={username}|password={password}|database=master|host={asset}"
 DBeaver Oracle,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "con name=SG-Oracle-autologon|driver=oracle_thin|url=jdbc:oracle:thin:@{asset}:1521:oracle|user={username}|password={password}"
