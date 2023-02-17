@@ -1,0 +1,2 @@
+# SafeguardAutomation : Terminal Pattern Files
+

@@ -1,2 +1,2 @@
-# SafeguardAutomation -- RDP Applications
+# SafeguardAutomation : RDP Applications
 
