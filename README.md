@@ -9,7 +9,7 @@ One Identity open source projects are supported through [One Identity GitHub iss
 
 The purpose of this repository is to share automation examples and supplementary documentation to help you build solutions for your PAM use cases with Safeguard.  The examples and documentation are organized by category, and each category subdirectory of the repository includes another README.md containing additional details.  Most of the content in this repository is related to Safeguard sessions and custom credential injection scenarios.
 
-### [RDP Applications](RDP%20Applications)
+### RDP Applications
 
 Safeguard uses protocol proxy technology to manage and record privileged access to critical systems and sensitive data.  Safeguard supports many different platforms for credential management and a wide variety of protocols for session access, but not every protocol provides an acceptable audit experience.  This is because some protocols, such those in use for database access or web application access, do not provide a continuous session connection.  Most database drivers make a separate TCP connection for each command, and a web application session is made up of many separate, asynchronous HTTP requests.  The resulting portocol recordings do not lend themselves to a movie-like playback, and an auditor or incident investigator will not be able to see exactly what the end user saw depending on how the client rendered the session.
 
@@ -17,7 +17,7 @@ RDP applications can be used to provide movie-like playback for any system, any 
 
 [More details...](RDP%20Applications)
 
-### [Terminal Pattern Files](Terminal%20Pattern%20Files)
+### Terminal Pattern Files
 
 Safeguard has the ability to launch and record terminal access to mainframes, midrange computers, and minis via Telnet, TN3270, and TN5250 protocols.  TN3270 and TN5250 sessions start with basic Telnet which then transform into a 3270 or 5250 connection after specific options and control characters are sent to establish the appropriate data streams.  Often, the login experience is presented as a form which may prompt for username, password, and potentially, other information.  [Safeguard Custom Platforms](https://github.com/OneIdentity/SafeguardCustomPlatform) can be created to handle credential management for these scenarios, but Safeguard also needs customization for credential injection.
 
