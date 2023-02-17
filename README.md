@@ -19,7 +19,7 @@ RDP applications can be used to provide movie-like playback for any system, any 
 
 ### [Terminal Pattern Files](Terminal%20Pattern%20Files)
 
-Safeguard has the ability to launch and record terminal access to mainframes, midrange computers, and minis via Telnet, TN3270, and TN5250 protocols.  TN3270 and TN5250 sessions start with basic Telnet which then transform into a 3270 or 5250 connection after specific options and control characters are sent to establish the appropriate data streams.  Often, the login experience is presented as a form which may prompt for username, password, and potentially, other information.
+Safeguard has the ability to launch and record terminal access to mainframes, midrange computers, and minis via Telnet, TN3270, and TN5250 protocols.  TN3270 and TN5250 sessions start with basic Telnet which then transform into a 3270 or 5250 connection after specific options and control characters are sent to establish the appropriate data streams.  Often, the login experience is presented as a form which may prompt for username, password, and potentially, other information.  [Safeguard Custom Platforms](https://github.com/OneIdentity/SafeguardCustomPlatform) can be created to handle credential management for these scenarios, but Safeguard also needs customization for credential injection.
 
 This section of the repository contains a plugin and template pattern files that are necessary to establish these connections and securely inject privileged credentials.
 
@@ -50,5 +50,3 @@ Session Plugin Resources:
 - [Plugin SDK](https://github.com/OneIdentity/safeguard-sessions-plugin-sdk)
 - [AA Skeleton](https://github.com/OneIdentity/safeguard-sessions-plugin-skeleton-aa)
 - [List of Plugins](https://github.com/topics/oi-sps-plugin)
-
-[One Identity Home](https://github.com/OneIdentity)
