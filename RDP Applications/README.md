@@ -1,6 +1,18 @@
 # SafeguardAutomation : RDP Applications
 
-The RDP Applications solution consists of multiple components working together to provide seamless privileged access to published RDP applications.  The solution may be configured to require approvals via SPP access request workflow and credential injection for both the RDP connection and the published RDP application.  The end users requests session access and starts the session in the normal way, but only the requested application appears on the screen.
+## Resources
+
+| Resource | Description |
+| --- | --- |
+| [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher) | Remote Application Publisher for publishing your configuration. |
+| [AutoIt](AutoIt) | Sample AutoIT scripts and examples for injecting passwords into Windows forms and web applications. |
+| [Go chromedp](Go%20chromedp) | |
+| [Deprecated Publisher](Deprecated%20Publisher) | |
+
+
+## Background
+
+The RDP Applications solution consists of multiple components working together to provide seamless privileged access to published RDP applications.  The solution may be configured to require approvals via SPP access request workflow and credential injection for both the RDP connection and the published RDP application.  The end users requests session access and starts the session in the normal way, but only the requested remote application appears on the screen rather than a full remote desktop session.
 
 ![RdpAppArchDiagram](Images/RdpAppArchDiagram.png)
 
