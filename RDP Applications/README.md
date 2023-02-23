@@ -11,8 +11,14 @@
 | [Deprecated Publisher](Deprecated%20Publisher) | Before the [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher), this tool was used to create published RDP applications to launch with the One Identity Safeguard remote application [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions). |
 | [SCALUS]() | After completing approval workflow, there are two ways for the end user to start an SPP-initiated RDP application session: 1) download the RDP file from Safeguard, 2) click the launch button to invoke a custom URL via Session Client Application Launch Uri System (SCALUS). |
 
-*Try out the [RDP application tutorial](Tutorial).*
+### Getting Started
 
+*Try out the basic [RDP application tutorial](Tutorial).*
+
+After you are familiar with the basic tutorial, the following will be helpful to create your own RDP application launching scenario.
+
+- [Use or customize an AutoIt script](AutoIt)
+- [Build a laucher using Go chromedp](Go%20chromedp)
 
 ## Background
 
@@ -40,8 +46,11 @@ The following is a description of how the solution works for an end-user:
   1. The end user navigates to the SPP portal to request privileged access to the Postgres database running on `dbms.dan.vas` as the `admin` account.  This can be done either using a favorite or by searching for "dbms.dan.vas admin".
   2. The necessary approval workflow as configured in the RDP Application access policy must be satisfied to grant privileged access.
   3. The end user may start the session by downloading an RDP file from the SPP portal or by clicking on the `Launch Session` button in the SPP portal.  The `Launch Session` button requires a up-to-date version of [SCALUS](https://github.com/OneIdentity/SCALUS).
-  4. The end user client computer will establish an RDP connection to the SPS, which uses in-band destination selection to create the RDP connection to the jump host.  Credentials required to authenticate to the jump host are securely retrieved from SPP and played into the RDP connection.  Additional credentials necessary to access the target system (the Postgres database) are also retrieved from SPP.
+  4. The end user client computer will establish an RDP connection to the SPS, which uses in-band destination selection to create the RDP connection to the jump host, `jumprdp.dan.vas`.  Credentials required to authenticate to the jump host are securely retrieved from SPP and played into the RDP connection.  The credentials for the RDP connection could be a local account on `jumprdp.dan.vas` or an AD account in the `dan.vas` domain.  Additional information and credentials necessary to access the target system (the Postgres database) are also retrieved from SPP.  In this case, the credentials are the password for the `admin` account on `dbms.dan.vas`.
   5. When the RDP session is authenticated and connected, instead of creating a full desktop session, only the `OI-SG-RemoteApp-Launcher.exe` application (aka the Launcher) is started.
   6. The Launcher securely retrieves the target system credentials from SPS and uses them to execute the command line specified in the registered remote application command line.  The specified command line will contain the client program along with credential information necessary to access the target system (the Postgres database).
-  7. The end user sees only the client program appear on their local desktop, even though it is actually running on the jump host.  This is because the RDP drawing channel coming from the jump host is rendered directly on their local desktop, and the keyboard and mouse events are sent over RDP to the jump host.
+  7. The end user sees the client program, `DBeaver`, appear on their local desktop, even though it is actually running on the jump host.  This is because the RDP drawing channel coming from the jump host is rendered directly on their local desktop, and the keyboard and mouse events are sent over RDP to the jump host.
   8. After the end user closes the client program, the RDP connection is closed.  There is a recording of the end user activity available from the SPS.
+
+  **VIDEO:**
+
