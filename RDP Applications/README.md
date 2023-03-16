@@ -4,7 +4,7 @@
 
 | Resource | Description |
 | --- | --- |
-| [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher) | Remote Application Publisher for publishing your configuration. |
+| [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher) | Optional application that makes it easier to publish your configuration. |
 | [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions) | Required component that must be published to securely launch and inject credentials into target applications. |
 | [AutoIt](AutoIt) | Sample AutoIT scripts and examples for injecting passwords into Windows forms and web applications. |
 | [Go chromedp](Go%20chromedp) | chromedp is a library in Go for automating browsers.  It can be used to automate credential injections in web forms. |
@@ -22,11 +22,11 @@ After you are familiar with the basic tutorial, the following will be helpful to
 
 ## Background
 
-The RDP Applications solution consists of multiple components working together to provide seamless privileged access to published RDP applications.  The solution may be configured to require approvals via SPP access request workflow and credential injection for both the RDP connection and the published RDP application.  The end users requests session access and starts the session in the normal way, but only the requested remote application appears on the screen rather than a full remote desktop session.
+The RDP Applications solution consists of multiple components working together to provide seamless privileged access to published RDP applications.  The solution may be configured to require approvals via SPP access request workflow and credential injection for both the RDP connection and the published RDP application.  The end user requests session access and starts the session in the normal way, but only the requested remote application appears on the screen rather than a full remote desktop session.
+
+### Diagram and Description of Components
 
 ![RdpAppArchDiagram](Images/RdpAppArchDiagram.png)
-
-### Components
 
 | Component | Description |
 | --- | --- |
@@ -38,7 +38,7 @@ The RDP Applications solution consists of multiple components working together t
 | **Client** | The client program used to access the target application; in the diagram this is a database client such as SQL Server Management Studio, DBeaver, or MySQL Workbench.  This client is invoked by the [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions) and the application credentials are passed via the command line.  There are many application clients that do not support credentials from the command line.  In these cases, AutoIt and other technologies can be used to populate forms and submit credentials.  Much of the content of this section is dedicated to samples and documentation for how this may be accomplished. |
 | **Publisher** | The Remote Application Publisher component is not depicted in the diagram.  It is an [open source project](https://github.com/OneIdentity/RemoteApplicationPublisher) that facilitates the RDP application configuration necessary to publish the Launcher and required command line as a published RDP application on Windows.  This configuration can be created manually or using Microsoft's tools, but the Publisher component |
 
-### Description
+### Use Case Description
 
 **USE CASE:** Privileged access to a database containing sensitive data
 
