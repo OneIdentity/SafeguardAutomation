@@ -15,7 +15,7 @@ Safeguard uses protocol proxy technology to manage and record privileged access 
 
 RDP applications can be used to provide movie-like playback for any system, any protocol, or any application by recording the end user's interaction with a remote published application over remote desktop protocol.  Safeguard includes a special remote application launching mechanism that allows secure privileged credential injection.  This repository includes examples and documentation for configuring these applications.
 
-[More details...](RDP%20Applications)
+:arrow_forward: [More details...](RDP%20Applications)
 
 ### Terminal Pattern Files
 
@@ -23,7 +23,7 @@ Safeguard has the ability to launch and record terminal access to mainframes, mi
 
 This section of the repository contains a plugin and template pattern files that are necessary to establish these connections and securely inject privileged credentials.
 
-[More details...](Terminal%20Pattern%20Files)
+:arrow_forward: [More details...](Terminal%20Pattern%20Files)
 
 ## Additional Information
 

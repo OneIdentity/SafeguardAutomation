@@ -13,7 +13,7 @@
 
 ### Getting Started
 
-*Try out the basic [RDP application tutorial](Tutorial).*
+:arrow_forward: *Try out the basic [RDP application configuration tutorial](Tutorial).*
 
 After you are familiar with the basic tutorial, the following will be helpful to create your own RDP application launching scenario.
 
@@ -50,7 +50,8 @@ The following is a description of how the solution works for an end-user:
   5. When the RDP session is authenticated and connected, instead of creating a full desktop session, only the `OI-SG-RemoteApp-Launcher.exe` application (aka the Launcher) is started.
   6. The Launcher securely retrieves the target system credentials from SPS and uses them to execute the command line specified in the registered remote application command line.  The specified command line will contain the client program along with credential information necessary to access the target system (the Postgres database).
   7. The end user sees the client program, `DBeaver`, appear on their local desktop, even though it is actually running on the jump host.  This is because the RDP drawing channel coming from the jump host is rendered directly on their local desktop, and the keyboard and mouse events are sent over RDP to the jump host.
-  8. After the end user closes the client program, the RDP connection is closed.  There is a recording of the end user activity available from the SPS.
+  8. After the end user closes the client program, the RDP connection is closed.  There will be a recording of the end user activity available from the SPS search interface.
 
-  **VIDEO:**
+**VIDEO:**
 
+Coming soon...
