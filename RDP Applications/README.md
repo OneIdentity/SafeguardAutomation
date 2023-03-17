@@ -21,6 +21,7 @@ After you are familiar with the basic tutorial, the following resources will be 
 
 - [Use or customize an AutoIt script](AutoIt)
 - [Use web form automation via Go chromedp](Go%20chromedp)
+- [Command line examples](Command%20Line%20Examples)
 
 Those links will explain how those launching scenarios are built.
 
