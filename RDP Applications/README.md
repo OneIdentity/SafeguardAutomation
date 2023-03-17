@@ -18,7 +18,7 @@
 After you are familiar with the basic tutorial, the following will be helpful to create your own RDP application launching scenario.
 
 - [Use or customize an AutoIt script](AutoIt)
-- [Build a laucher using Go chromedp](Go%20chromedp)
+- [Use web form automation via Go chromedp](Go%20chromedp)
 
 ## Background
 
