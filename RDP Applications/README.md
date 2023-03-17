@@ -13,9 +13,11 @@
 
 ### Getting Started
 
+Read the [Background](#Background) below, then
+
 :arrow_forward: *Try out the basic [RDP application configuration tutorial](Tutorial).*
 
-After you are familiar with the basic tutorial, the following will be helpful to create your own RDP application launching scenario.
+After you are familiar with the basic tutorial, the following resources will be helpful to create your own RDP application launching scenario.
 
 - [Use or customize an AutoIt script](AutoIt)
 - [Use web form automation via Go chromedp](Go%20chromedp)
@@ -74,6 +76,17 @@ Setup required by the admin:
   3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application. (see notes in USE CASE #1)
   4. Because `SQL Server Management Studio` cannot take a password on the command line, the password must be entered in via automation.
      1. Use [AutoIt](https://www.autoitscript.com/site/autoit/downloads/) to launch the client program, wait for the prompt, and play it in.
-     2. Write the script and compile it as an executable.  Use [this example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/AutoIt/Microsoft%20SQL%20Server%20Management%20Studio).
+     2. Write the script and compile it as an executable.  Use [this AutoIT example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/AutoIt/Microsoft%20SQL%20Server%20Management%20Studio).
 
 The end-user experience will be the same as in USE CASE #1.  The only difference will be that instead of loading `DBeaver`, the end-user will see `SQL Server Management Studio` load.
+
+<ins>**USE CASE #3:**</ins> Privileged access to SPS admin account
+
+Setup required by the admin:
+  1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
+  2. Install a browser to be the client program--chrome or edge work well.
+  3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application. (see notes in USE CASE #1)
+  4. Because the web browser cannot take a password on the command line, the password must be entered in via automation.
+     1. Use [Go chromedp](Go%20chromedp) to launch the browser and play in the credential
+     2. Write the script and compile it as an executable.  Use [this sps example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/Go%20chromedp).
+     
