@@ -74,6 +74,8 @@ Coming soon...
 
 <ins>**USE CASE #2:**</ins> Privileged access to a MS SQL Server via SQL Server Management Studio
 
+![UseCase1](Images/UseCase2.png)
+
 Setup required by the admin:
   1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
   2. Install the client program, `SQL Server Management Studio`, which will be used to access the target database.
@@ -89,6 +91,8 @@ The end-user experience will be the same as in USE CASE #1.  The only difference
 Coming soon...
 
 <ins>**USE CASE #3:**</ins> Privileged access to SPS admin account
+
+![UseCase1](Images/UseCase3.png)
 
 Setup required by the admin:
   1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
