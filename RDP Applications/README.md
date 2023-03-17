@@ -83,7 +83,7 @@ Setup required by the admin:
   2. Install the client program, `SQL Server Management Studio`, which will be used to access the target database.
   3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application. (see notes in USE CASE #1)
   4. Because `SQL Server Management Studio` cannot take a password on the command line, the password must be entered in via automation.
-     1. Use [AutoIt](https://www.autoitscript.com/site/autoit/downloads/) to launch the client program, wait for the prompt, and play it in.
+     1. Use [AutoIt](https://www.autoitscript.com/site/autoit/downloads/) as a wrapper to launch the client program, wait for the prompt, and play it in.
      2. Write the script and compile it as an executable.  Use [this AutoIT example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/AutoIt/Microsoft%20SQL%20Server%20Management%20Studio).
 
 The end-user experience will be the same as in USE CASE #1.  The only difference will be that instead of loading `DBeaver`, the end-user will see `SQL Server Management Studio` load.
@@ -101,7 +101,7 @@ Setup required by the admin:
   2. Install a browser to be the client program--chrome or edge work well.
   3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application. (see notes in USE CASE #1)
   4. Because the web browser cannot take a password on the command line, the password must be entered in via automation.
-     1. Use [Go chromedp](Go%20chromedp) to launch the browser and play in the credential
+     1. Use [Go chromedp](Go%20chromedp) as a wrapper to launch the browser and play in the credential
      2. Write the script and compile it as an executable.  Use [this sps example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/Go%20chromedp).
      
 **VIDEO:**
