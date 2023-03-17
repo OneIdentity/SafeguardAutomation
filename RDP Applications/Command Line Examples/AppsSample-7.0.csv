@@ -1,0 +1,9 @@
+Application,Tested Safeguard Version,CMD Executable,Args Parameter
+SQL Studio,7.0,--cmd "C:\AutoIT\sqlstudio.exe",--args "{username} {password} {asset}"
+DBeaver MySQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MySQL-autologon|driver=mysql|user={username}|password={password}|host={asset}"
+DBeaver MSSQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MSSQL-autologon|driver=mssql_ms|user={username}|password={password}|database=master|host={asset}"
+DBeaver Oracle,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "con name=SG-Oracle-autologon|driver=oracle_thin|url=jdbc:oracle:thin:@{asset}:1521:oracle|user={username}|password={password}"
+Azure Portal,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome portal.azure.com v::#i0116::{username}||c::#idSIButton9||s::#i0118::{password}||c::#idSIButton9||c::#idBtn_Back {asset}"
+Splunk,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} splunk.example.com:8000 #username #password #password input.splButton-primary.btn.btn-primary"
+SPS default local user,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} sps.example.com #local-username #local-password #password button.primary"
+AWS non-root,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} signin.aws.amazon.com/console #resolving_input #password #signin_button #next_button"
