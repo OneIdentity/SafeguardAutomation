@@ -38,17 +38,19 @@ The RDP Applications solution consists of multiple components working together t
 | **Client** | The client program used to access the target application; in the diagram this is a database client such as SQL Server Management Studio, DBeaver, or MySQL Workbench.  This client is invoked by the [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions) and the application credentials are passed via the command line.  There are many application clients that do not support credentials from the command line.  In these cases, AutoIt and other technologies can be used to populate forms and submit credentials.  Much of the content of this section is dedicated to samples and documentation for how this may be accomplished. |
 | **Publisher** | The Remote Application Publisher component is not depicted in the diagram.  It is an [open source project](https://github.com/OneIdentity/RemoteApplicationPublisher) that facilitates the RDP application configuration necessary to publish the Launcher and required command line as a published RDP application on Windows.  This configuration can be created manually or using Microsoft's tools, but the Publisher component |
 
+**NOTE:** Published RDP applications are stored in the Windows registry at:<br>`HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\TSAppAllowList\Applications`.
+
 ### Use Case Descriptions
 
-**USE CASE #1:** Privileged access to a database containing sensitive data
+<ins>**USE CASE #1:**</ins> Privileged access to a database containing sensitive data
 
 Setup required by the admin:
   1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
   2. Install the client program, `DBeaver`, which will be used to access the target database.
-  3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application
-     a. You will need to design command-line arguments to `OI-SG-RemoteApp-Launcher.exe` that will in turn launch `DBeaver` and pass the username, password, and target database on the command-line.
-     b. Use the `--cmd <CMD>` and `--args <ARGS>` parameters respectively to specify the full path to the `DBeaver` client program and argument string for `DBeaver`.
-     c. Use the `--enable-debug` parameter for debugging.  Debug logs for each launch will be created in `%AppData%\OneIdentity\OI-SG-RemoteApp-Launcher\`.
+  3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application.
+     1. You will need to design command-line arguments to `OI-SG-RemoteApp-Launcher.exe` that will in turn launch `DBeaver` and pass the username, password, and target database on the command-line.
+     2. Use the `--cmd <CMD>` and `--args <ARGS>` parameters respectively to specify the full path to the `DBeaver` client program and argument string for `DBeaver`.
+     3. Use the `--enable-debug` parameter for debugging.  Debug logs for each launch will be created in `%AppData%\OneIdentity\OI-SG-RemoteApp-Launcher\`.
 
 The following is a description of how the solution works for an end-user:
   1. The end user navigates to the SPP portal to request privileged access to the Postgres database running on `dbms.dan.vas` as the `admin` account.  This can be done either using a favorite or by searching for "dbms.dan.vas admin".
@@ -63,3 +65,15 @@ The following is a description of how the solution works for an end-user:
 **VIDEO:**
 
 Coming soon...
+
+<ins>**USE CASE #2:**</ins> Privileged access to a MS SQL Server via SQL Server Management Studio
+
+Setup required by the admin:
+  1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
+  2. Install the client program, `SQL Server Management Studio`, which will be used to access the target database.
+  3. Use the Remote Application Publisher or the native Microsoft tooling to register `OI-SG-RemoteApp-Launcher.exe` as a remote application. (see notes in USE CASE #1)
+  4. Because `SQL Server Management Studio` cannot take a password on the command line, the password must be entered in via automation.
+     1. Use [AutoIt](https://www.autoitscript.com/site/autoit/downloads/) to launch the client program, wait for the prompt, and play it in.
+     2. Write the script and compile it as an executable.  Use [this example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/AutoIt/Microsoft%20SQL%20Server%20Management%20Studio).
+
+The end-user experience will be the same as in USE CASE #1.  The only difference will be that instead of loading `DBeaver`, the end-user will see `SQL Server Management Studio` load.
