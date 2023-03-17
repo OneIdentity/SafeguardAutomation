@@ -48,6 +48,8 @@ The RDP Applications solution consists of multiple components working together t
 
 <ins>**USE CASE #1:**</ins> Privileged access to a database containing sensitive data
 
+![UseCase1](Images/UseCase1.png)
+
 Setup required by the admin:
   1. Install the `OI-SG-RemoteApp-Launcher.exe` (aka the Launcher) on the jump host.
   2. Install the client program, `DBeaver`, which will be used to access the target database.
