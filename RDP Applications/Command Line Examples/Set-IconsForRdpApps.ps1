@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Set icon for published RDP application.
 
@@ -14,19 +14,6 @@ A string containing the display name of the RDP application as shown in Server M
 
 .PARAMETER IconPath
 A string containing the path to an icon file.
-
-.INPUTS
-None.
-
-.OUTPUTS
-JSON response from Safeguard Web API.
-
-.EXAMPLE
-Get-SafeguardDebugSettings -AccessToken $token -Appliance 10.5.32.54 -Insecure
-
-.EXAMPLE
-Set-SafeguardDebugSettings
-#>
 #>
 [CmdletBinding()]
 Param(
