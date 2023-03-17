@@ -4,12 +4,12 @@
 
 | Resource | Description |
 | --- | --- |
-| [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher) | Optional application that makes it easier to publish your configuration. |
+| [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher) | Optional application that can be used to make it easier to publish your remote applications. |
 | [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions) | Required component that must be published to securely launch and inject credentials into target applications. |
 | [AutoIt](AutoIt) | Sample AutoIT scripts and examples for injecting passwords into Windows forms and web applications. |
 | [Go chromedp](Go%20chromedp) | chromedp is a library in Go for automating browsers.  It can be used to automate credential injections in web forms. |
 | [Deprecated Publisher](Deprecated%20Publisher) | Before the [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher), this tool was used to create published RDP applications to launch with the One Identity Safeguard remote application [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions). |
-| [SCALUS]() | After completing approval workflow, there are two ways for the end user to start an SPP-initiated RDP application session: 1) download the RDP file from Safeguard, 2) click the launch button to invoke a custom URL via Session Client Application Launch Uri System (SCALUS). |
+| [SCALUS]() | Optional component. After completing approval workflow, there are two ways for the end user to start an SPP-initiated RDP application session: 1) download the RDP file from Safeguard, 2) click the launch button to invoke a custom URL via Session Client Application Launch Uri System (SCALUS). |
 
 ### Getting Started
 
