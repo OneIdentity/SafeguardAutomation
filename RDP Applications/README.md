@@ -22,6 +22,8 @@ After you are familiar with the basic tutorial, the following resources will be 
 - [Use or customize an AutoIt script](AutoIt)
 - [Use web form automation via Go chromedp](Go%20chromedp)
 
+Those links will explain how those launching scenarios are built.
+
 ## Background
 
 The RDP Applications solution consists of multiple components working together to provide seamless privileged access to published RDP applications.  The solution may be configured to require approvals via SPP access request workflow and credential injection for both the RDP connection and the published RDP application.  The end user requests session access and starts the session in the normal way, but only the requested remote application appears on the screen rather than a full remote desktop session.
@@ -80,6 +82,10 @@ Setup required by the admin:
 
 The end-user experience will be the same as in USE CASE #1.  The only difference will be that instead of loading `DBeaver`, the end-user will see `SQL Server Management Studio` load.
 
+**VIDEO:**
+
+Coming soon...
+
 <ins>**USE CASE #3:**</ins> Privileged access to SPS admin account
 
 Setup required by the admin:
@@ -90,3 +96,6 @@ Setup required by the admin:
      1. Use [Go chromedp](Go%20chromedp) to launch the browser and play in the credential
      2. Write the script and compile it as an executable.  Use [this sps example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/Go%20chromedp).
      
+**VIDEO:**
+
+Coming soon...
