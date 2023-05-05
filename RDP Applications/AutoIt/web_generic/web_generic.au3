@@ -1,20 +1,27 @@
+$web_generic_version = "3.3"
+
 ; ONLY FOR DEMO USE
 ;
 ; Compile with Aut2exe to ensure the include files are compiled too
 ;
-; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <firefox|chrome|edge> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||c::css4 {asset}"
+; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <firefox|f|chrome|c|edge|e> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||o::css4::{Target.TotpCodes}::5||c::css5 {asset}"
 ;
 ; Altough the code supports Firefox (needs geckodriver.exe) and Edge (needs msedgedriver.exe) too:
 ; - Edge has not been tested at all
 ; - It is not reliable with Firefox. Also, it should disable devtools but in the tests not all of them got disabled and users can re-enable them at this point.
 ;
-; The code supports any number of selectors, types of "v" as value or "c" as click or "s" as secret which is not logged, separated by "||".
-; Input parameters:
+; Web orchestration parameters:
+; The code supports any number of selectors, types of:
+;   "v" as value
+;   "c" as click
+;   "s" as secret which is not logged
+;   "o" as totp json input, with the minimum number of seconds required to enter the OTP before it expires
+; separated by "||".
+;
 ; The actual action is defined with "::" separator.
-; Sample: "v::css1::username||c::css2||c::css3||s::css4::password||c::css4"
+; Sample: "v::css1::username||c::css2||c::css3||s::css4::password||o::css4::{Target.TotpCodes}::5||c::css5"
 ;
 ; The code disables user input when not running in debug mode
-
 
 Opt("TrayAutoPause", 0)
 Opt("TrayIconDebug", 0)
@@ -22,10 +29,11 @@ Opt("TrayIconDebug", 0)
 #include <MsgBoxConstants.au3>
 #include <Date.au3>
 
-#include 'webdriver\wd_core.au3'
-#include 'webdriver\wd_helper.au3'
-
-#include "webdriver\BlockInputEX.au3"
+#include 'lib\UnixTime.au3'
+#include 'lib\json.au3'
+#include 'lib\wd_core.au3'
+#include 'lib\wd_helper.au3'
+#include "lib\BlockInputEX.au3"
 
 Local $debug = $CmdLine[1]
 Local $browser = $CmdLine[2]
@@ -34,13 +42,13 @@ Local $input = $CmdLine[4]
 Local $asset = $CmdLine[5] ; Asset will not be used as cloud targets may be accessible on a different name than the Asset Name / Network Address in SPP, however the {asset} parameter must be given for the Launcher.
 Local $loglevel = ''
 
-If $debug Then
+If $debug = 1 Then
 	$loglevel = 'debug'
 Else
 	$loglevel = 'info'
 EndIf
-$logfile = FileOpen(@UserProfileDir & "\AppData\Roaming\OneIdentity\OI-SG-RemoteApp-Launcher-Orchestration\web_generic.log", $FO_APPEND + $FO_CREATEPATH)
-Logger('info', "Starting web orchestration with loglevel:" & $loglevel)
+$logfile = FileOpen(@UserProfileDir & "\AppData\Roaming\OneIdentity\OI-SG-RemoteApp-Launcher-Orchestration\web_generic_" & @YEAR & @MON & @MDAY & ".log", $FO_APPEND + $FO_CREATEPATH)
+Logger('info', "Starting web_generic_" & $web_generic_version & " with loglevel:" & $loglevel)
 Logger('debug', "browser=" & $browser)
 
 Local $sDesiredCapabilities, $sSession
@@ -50,9 +58,15 @@ Local $sDesiredCapabilities, $sSession
 Switch $browser
 	Case 'chrome'
 		SetupChrome()
+	Case 'c'
+		SetupChrome()
 	Case 'firefox'
 		SetupGecko()
+	Case 'f'
+		SetupGecko()
 	Case 'edge'
+		SetupEdge()
+	Case 'e'
 		SetupEdge()
 EndSwitch
 
@@ -116,6 +130,47 @@ If IsArray($steps) Then
 						_WD_ElementAction($sSession, $element, 'value', $step[3])
 						Logger('debug', 'Entered secret into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
 					WEnd
+				Case 'o'
+					Logger('debug', "Looking up valid TOTP code...")
+					Logger('debug', "[TOTP_Lookup] Required seconds before TOTP expiry: " & $step[4])
+					Logger('debug', "[TOTP_Lookup] TOTP JSON: " & $step[3])
+					Logger('debug', "[TOTP_Lookup] Removing escape characters from TOTP JSON")
+					$j_totp = StringReplace($step[3],"\","")
+					Logger('debug', "[TOTP_Lookup] New TOTP JSON: " & $j_totp)
+					$totp = json_decode($j_totp)
+					Local $j = 0
+					Local $totp_Code = 0
+					While 1
+						$currentUnixTime = _GetUnixTime()
+						$totp_UnixTime = json_get($totp, '[' & $j & '].UnixTime')
+						Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].UnixTime: ' & $totp_UnixTime)
+						$totp_Period = json_get($totp, '[' & $j & '].Period')
+						Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].Period: ' & $totp_Period)
+						If @error Then
+							Logger('info', "[TOTP_Lookup] Error during TOTP lookup")
+							ExitLoop
+						EndIf
+						Logger('debug', "[TOTP_Lookup] UTC start time for code as UnixTime: " & $totp_UnixTime & ", Code period: " & $totp_Period & ", current UnixTime: " & $currentUnixTime)
+ 						$totp_diff = $totp_UnixTime + $totp_Period - $currentUnixTime
+						If $totp_diff >= $step[4] Then
+							$totp_Code = json_get($totp, '[' & $j & '].Code')
+							Logger('debug', "Found valid TOTP code, expiring in " & $totp_diff & " seconds")
+							ExitLoop
+						Else
+							Logger('debug', "[TOTP_Lookup] TOTP code is closer to expiry than defined minimum " & $step[4] & " seconds or already expired. Diff: " & $totp_diff)
+							$j += 1
+						EndIf
+					WEnd
+
+					If $totp_Code = 0 Then
+						Logger('info', "Have not found valid TOTP code, exit.")
+						Exit
+					EndIf
+
+					While $_WD_HTTPRESULT <> 200
+						_WD_ElementAction($sSession, $element, 'value', $totp_Code)
+						Logger('debug', 'Entered TOTP code into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+					WEnd
 			EndSwitch
 			$_WD_HTTPRESULT = 0
 		Else
@@ -128,8 +183,11 @@ Else
 	Exit
 EndIf
 
-_BlockInput($BI_ENABLE, Default)
-Logger('debug', 'User input enabled')
+; Enable user input
+If $debug = 0 Then
+	_BlockInput($BI_ENABLE, Default)
+	Logger('debug', 'User input enabled')
+EndIf
 
 FileClose($logfile)
 
