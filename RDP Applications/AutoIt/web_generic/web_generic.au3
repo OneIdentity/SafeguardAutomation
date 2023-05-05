@@ -153,11 +153,24 @@ If IsArray($steps) Then
 						Logger('debug', "[TOTP_Lookup] UTC start time for code as UnixTime: " & $totp_UnixTime & ", Code period: " & $totp_Period & ", current UnixTime: " & $currentUnixTime)
  						$totp_diff = $totp_UnixTime + $totp_Period - $currentUnixTime
 						If $totp_diff >= $step[4] Then
-							$totp_Code = json_get($totp, '[' & $j & '].Code')
+							$totp_Code = String(json_get($totp, '[' & $j & '].Code'))
+							$codeLen = StringLen($totp_Code)
+							If $codeLen <> 6 Then
+								Logger('debug', 'TOTP with leading zeros parsed as: ' & $totp_Code & '. Adding leading zeros back.')
+								$zeros = ''
+								For $s = 1 To (6-$codeLen)
+									$zeros = $zeros & '0'
+								Next
+								$totp_Code = $zeros & $totp_Code
+							EndIf
 							Logger('debug', "Found valid TOTP code, expiring in " & $totp_diff & " seconds")
 							ExitLoop
+						ElseIf $totp_diff < 0 Then
+							Logger('debug', "[TOTP_Lookup] TOTP code is already expired. Diff: " & $totp_diff & ". Checking the next code.")
+							$j += 1
 						Else
-							Logger('debug', "[TOTP_Lookup] TOTP code is closer to expiry than defined minimum " & $step[4] & " seconds or already expired. Diff: " & $totp_diff)
+							Logger('debug', "[TOTP_Lookup] TOTP code is closer to expiry than defined minimum " & $step[4] & " seconds. Diff: " & $totp_diff & ". Waiting " & $step[4] & " seconds before checking the next code.")
+							Sleep($step[4]*1000)
 							$j += 1
 						EndIf
 					WEnd
@@ -169,7 +182,7 @@ If IsArray($steps) Then
 
 					While $_WD_HTTPRESULT <> 200
 						_WD_ElementAction($sSession, $element, 'value', $totp_Code)
-						Logger('debug', 'Entered TOTP code into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+						Logger('debug', 'Entered TOTP code ' & $totp_Code & ' into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
 					WEnd
 			EndSwitch
 			$_WD_HTTPRESULT = 0
