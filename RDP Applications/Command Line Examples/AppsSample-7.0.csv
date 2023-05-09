@@ -10,3 +10,6 @@ Splunk,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password}
 Splunk,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome splunk.oneidentity.work:443 v::#username::{username}||s::#password::{password}||c::input.splButton-primary.btn.btn-primary {asset}"
 SPS default local user,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} sps.example.com #local-username #local-password #password button.primary"
 AWS non-root,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} signin.aws.amazon.com/console #resolving_input #password #signin_button #next_button"
+AWS (via Starling) non-root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c {asset}.signin.aws.amazon.com/console v::#username::{username}||s::#password::{password}||c::#signin_button||o::#mfacode::{Target.TotpCodes}::3||c::#submitMfa_button"
+AWS root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c signin.aws.amazon.com/console v::#resolving_input::{username}||c::#next_button||s::#password::{password}||c::#signin_button||o::#mfaCode::{Target.TotpCodes}::3||c::#mfa_submit_button"
+signin_button #next_button"

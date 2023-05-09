@@ -1,10 +1,10 @@
-$web_generic_version = "3.3"
+$web_generic_version = "3.4"
 
 ; ONLY FOR DEMO USE
 ;
 ; Compile with Aut2exe to ensure the include files are compiled too
 ;
-; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <firefox|f|chrome|c|edge|e> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||o::css4::{Target.TotpCodes}::5||c::css5 {asset}"
+; cmd line arguments for launcher: OI-SG-RemoteApp-Launcher.exe --cmd <path>\web_generic.exe --args "<debug=0|1> <firefox|f|chrome|c|edge|e> targetUrl v::css1::{username}||c::css2||c::css3||s::css4::{password}||o::css4::{Target.TotpCodes}::5||c::css5 [optional:{asset}]"
 ;
 ; Altough the code supports Firefox (needs geckodriver.exe) and Edge (needs msedgedriver.exe) too:
 ; - Edge has not been tested at all
@@ -39,7 +39,9 @@ Local $debug = $CmdLine[1]
 Local $browser = $CmdLine[2]
 Local $target = $CmdLine[3]
 Local $input = $CmdLine[4]
-Local $asset = $CmdLine[5] ; Asset will not be used as cloud targets may be accessible on a different name than the Asset Name / Network Address in SPP, however the {asset} parameter must be given for the Launcher.
+If $CmdLine[0] = 5 Then
+	Local $asset = $CmdLine[5] ; Asset will not be used as cloud targets may be accessible on a different name than the Asset Name / Network Address in SPP, however the {asset} parameter must be given for the Launcher.
+EndIf
 Local $loglevel = ''
 
 If $debug = 1 Then
