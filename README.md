@@ -11,7 +11,7 @@ The purpose of this repository is to share automation examples and supplementary
 
 ### [RDP Applications](RDP%20Applications)
 
-Safeguard uses protocol proxy technology to manage and record privileged access to critical systems and sensitive data.  Safeguard supports many different platforms for credential management and a wide variety of protocols for session access, but not every protocol provides an acceptable audit experience.  This is because some protocols, such those in use for database access or web application access, do not provide a continuous session connection.  Most database drivers make a separate TCP connection for each command, and a web application session is made up of many separate, asynchronous HTTP requests.  The resulting portocol recordings do not lend themselves to a movie-like playback, and an auditor or incident investigator will not be able to see exactly what the end user saw depending on how the client rendered the session.
+Safeguard uses protocol proxy technology to manage and record privileged access to critical systems and sensitive data.  Safeguard supports many different platforms for credential management and a wide variety of protocols for session access, but not every protocol provides an acceptable audit experience.  This is because some protocols, such as those in use for database access or web application access, do not provide a continuous session connection.  Most database drivers make a separate TCP connection for each command, and a web application session is made up of many separate, asynchronous HTTP requests.  The resulting portocol recordings do not lend themselves to a movie-like playback, and an auditor or incident investigator will not be able to see exactly what the end user saw depending on how the client rendered the session.
 
 RDP applications can be used to provide movie-like playback for any system, any protocol, or any application by recording the end user's interaction with a remote published application over remote desktop protocol.  Safeguard includes a special remote application launching mechanism that allows secure privileged credential injection.  This repository includes examples and documentation for configuring these applications.
 
@@ -50,3 +50,8 @@ Session Plugin Resources:
 - [Plugin SDK](https://github.com/OneIdentity/safeguard-sessions-plugin-sdk)
 - [AA Skeleton](https://github.com/OneIdentity/safeguard-sessions-plugin-skeleton-aa)
 - [List of Plugins](https://github.com/topics/oi-sps-plugin)
+
+Utilities:
+
+- [RDP Remote Application Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher)
+- [SCALUS](https://github.com/OneIdentity/SCALUS)
