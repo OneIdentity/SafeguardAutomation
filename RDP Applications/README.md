@@ -9,7 +9,7 @@
 | [AutoIt](AutoIt) | Sample AutoIT scripts and examples for injecting passwords into Windows forms and web applications. |
 | [Go chromedp](Go%20chromedp) | chromedp is a library in Go for automating browsers.  It can be used to automate credential injections in web forms. |
 | [Deprecated Publisher](Deprecated%20Publisher) | Before the [Publisher](https://github.com/OneIdentity/RemoteApplicationPublisher), this tool was used to create published RDP applications to launch with the One Identity Safeguard remote application [Launcher](https://support.oneidentity.com/one-identity-safeguard-for-privileged-sessions). |
-| [SCALUS]() | Optional component. After completing approval workflow, there are two ways for the end user to start an SPP-initiated RDP application session: 1) download the RDP file from Safeguard, 2) click the launch button to invoke a custom URL via Session Client Application Launch Uri System (SCALUS). |
+| [SCALUS](https://github.com/OneIdentity/SCALUS) | Optional component. After completing approval workflow, there are two ways for the end user to start an SPP-initiated RDP application session: 1) download the RDP file from Safeguard, 2) click the launch button to invoke a custom URL via Session Client Application Launch Uri System (SCALUS). |
 
 ### Getting Started
 
@@ -103,7 +103,7 @@ Setup required by the admin:
   4. Because the web browser cannot take a password on the command line, the password must be entered in via automation.
      1. Use [Go chromedp](Go%20chromedp) as a wrapper to launch the browser and play in the credential
      2. Write the script and compile it as an executable.  Use [this sps example](https://github.com/OneIdentity/SafeguardAutomation/tree/master/RDP%20Applications/Go%20chromedp).
-     
+
 **VIDEO:**
 
 Coming soon...
