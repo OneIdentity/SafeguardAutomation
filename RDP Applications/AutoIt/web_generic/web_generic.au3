@@ -1,4 +1,4 @@
-$web_generic_version = "3.4"
+$web_generic_version = "3.5"
 
 ; ONLY FOR DEMO USE
 ;
@@ -11,6 +11,9 @@ $web_generic_version = "3.4"
 ; - It is not reliable with Firefox. Also, it should disable devtools but in the tests not all of them got disabled and users can re-enable them at this point.
 ;
 ; Web orchestration parameters:
+; If 'basicauth' is given then no orchestration is performed, the browser is just navigating to what is given in --args.
+; In such case the targetURL may be given in the following format: {username}:{password}@{Target.AssetNetworkAddress}/optionalPage
+;
 ; The code supports any number of selectors, types of:
 ;   "v" as value
 ;   "c" as click
@@ -101,101 +104,103 @@ WEnd
 $_WD_HTTPRESULT = 0
 
 ; Execute login workflow
-$steps = StringSplit($input, '||',$STR_ENTIRESPLIT)
-If IsArray($steps) Then
-	$nrOfSteps = UBound($steps)-1
-	Logger('debug', 'Parsed ' & $nrOfSteps & ' steps')
-	For $i=1 to $nrOfSteps
-		$step = StringSplit($steps[$i],"::",$STR_ENTIRESPLIT)
-		If IsArray($step) Then
-			$action = $step[1]
-			$css = $step[2]
-			Logger('debug', 'Action ' & $i & ': ' & $action & ', CSS selector: ' & $css)
-			While $_WD_HTTPRESULT <> 200
-				$element = _WD_WaitElement($sSession, $_WD_LOCATOR_ByCSSSelector,$css, Default,Default, BitOR($_WD_OPTION_Visible, $_WD_OPTION_Enabled))
-				Logger('debug', 'Locate element ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
-			WEnd
-			$_WD_HTTPRESULT = 0
-			Switch $action
-				Case 'c'
-					While $_WD_HTTPRESULT <> 200
-						_WD_ElementAction($sSession, $element, 'click')
-						Logger('debug', 'Clicked element: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
-					WEnd
-				Case 'v'
-					While $_WD_HTTPRESULT <> 200
-						_WD_ElementAction($sSession, $element, 'value', $step[3])
-						Logger('debug', 'Entered value: ' & $step[3] & ' into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
-					WEnd
-				Case 's'
-					While $_WD_HTTPRESULT <> 200
-						_WD_ElementAction($sSession, $element, 'value', $step[3])
-						Logger('debug', 'Entered secret into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
-					WEnd
-				Case 'o'
-					Logger('debug', "Looking up valid TOTP code...")
-					Logger('debug', "[TOTP_Lookup] Required seconds before TOTP expiry: " & $step[4])
-					Logger('debug', "[TOTP_Lookup] TOTP JSON: " & $step[3])
-					Logger('debug', "[TOTP_Lookup] Removing escape characters from TOTP JSON")
-					$j_totp = StringReplace($step[3],"\","")
-					Logger('debug', "[TOTP_Lookup] New TOTP JSON: " & $j_totp)
-					$totp = json_decode($j_totp)
-					Local $j = 0
-					Local $totp_Code = 0
-					While 1
-						$currentUnixTime = _GetUnixTime()
-						$totp_UnixTime = json_get($totp, '[' & $j & '].UnixTime')
-						Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].UnixTime: ' & $totp_UnixTime)
-						$totp_Period = json_get($totp, '[' & $j & '].Period')
-						Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].Period: ' & $totp_Period)
-						If @error Then
-							Logger('info', "[TOTP_Lookup] Error during TOTP lookup")
-							ExitLoop
-						EndIf
-						Logger('debug', "[TOTP_Lookup] UTC start time for code as UnixTime: " & $totp_UnixTime & ", Code period: " & $totp_Period & ", current UnixTime: " & $currentUnixTime)
- 						$totp_diff = $totp_UnixTime + $totp_Period - $currentUnixTime
-						If $totp_diff >= $step[4] Then
-							$totp_Code = String(json_get($totp, '[' & $j & '].Code'))
-							$codeLen = StringLen($totp_Code)
-							If $codeLen <> 6 Then
-								Logger('debug', 'TOTP with leading zeros parsed as: ' & $totp_Code & '. Adding leading zeros back.')
-								$zeros = ''
-								For $s = 1 To (6-$codeLen)
-									$zeros = $zeros & '0'
-								Next
-								$totp_Code = $zeros & $totp_Code
+If $input <> "basicauth" Then
+	$steps = StringSplit($input, '||',$STR_ENTIRESPLIT)
+	If IsArray($steps) Then
+		$nrOfSteps = UBound($steps)-1
+		Logger('debug', 'Parsed ' & $nrOfSteps & ' steps')
+		For $i=1 to $nrOfSteps
+			$step = StringSplit($steps[$i],"::",$STR_ENTIRESPLIT)
+			If IsArray($step) Then
+				$action = $step[1]
+				$css = $step[2]
+				Logger('debug', 'Action ' & $i & ': ' & $action & ', CSS selector: ' & $css)
+				While $_WD_HTTPRESULT <> 200
+					$element = _WD_WaitElement($sSession, $_WD_LOCATOR_ByCSSSelector,$css, Default,Default, BitOR($_WD_OPTION_Visible, $_WD_OPTION_Enabled))
+					Logger('debug', 'Locate element ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+				WEnd
+				$_WD_HTTPRESULT = 0
+				Switch $action
+					Case 'c'
+						While $_WD_HTTPRESULT <> 200
+							_WD_ElementAction($sSession, $element, 'click')
+							Logger('debug', 'Clicked element: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+						WEnd
+					Case 'v'
+						While $_WD_HTTPRESULT <> 200
+							_WD_ElementAction($sSession, $element, 'value', $step[3])
+							Logger('debug', 'Entered value: ' & $step[3] & ' into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+						WEnd
+					Case 's'
+						While $_WD_HTTPRESULT <> 200
+							_WD_ElementAction($sSession, $element, 'value', $step[3])
+							Logger('debug', 'Entered secret into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+						WEnd
+					Case 'o'
+						Logger('debug', "Looking up valid TOTP code...")
+						Logger('debug', "[TOTP_Lookup] Required seconds before TOTP expiry: " & $step[4])
+						Logger('debug', "[TOTP_Lookup] TOTP JSON: " & $step[3])
+						Logger('debug', "[TOTP_Lookup] Removing escape characters from TOTP JSON")
+						$j_totp = StringReplace($step[3],"\","")
+						Logger('debug', "[TOTP_Lookup] New TOTP JSON: " & $j_totp)
+						$totp = json_decode($j_totp)
+						Local $j = 0
+						Local $totp_Code = 0
+						While 1
+							$currentUnixTime = _GetUnixTime()
+							$totp_UnixTime = json_get($totp, '[' & $j & '].UnixTime')
+							Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].UnixTime: ' & $totp_UnixTime)
+							$totp_Period = json_get($totp, '[' & $j & '].Period')
+							Logger('debug', '[TOTP_Lookup] TOTP [' & $j & '].Period: ' & $totp_Period)
+							If @error Then
+								Logger('info', "[TOTP_Lookup] Error during TOTP lookup")
+								ExitLoop
 							EndIf
-							Logger('debug', "Found valid TOTP code, expiring in " & $totp_diff & " seconds")
-							ExitLoop
-						ElseIf $totp_diff < 0 Then
-							Logger('debug', "[TOTP_Lookup] TOTP code is already expired. Diff: " & $totp_diff & ". Checking the next code.")
-							$j += 1
-						Else
-							Logger('debug', "[TOTP_Lookup] TOTP code is closer to expiry than defined minimum " & $step[4] & " seconds. Diff: " & $totp_diff & ". Waiting " & $step[4] & " seconds before checking the next code.")
-							Sleep($step[4]*1000)
-							$j += 1
+							Logger('debug', "[TOTP_Lookup] UTC start time for code as UnixTime: " & $totp_UnixTime & ", Code period: " & $totp_Period & ", current UnixTime: " & $currentUnixTime)
+							$totp_diff = $totp_UnixTime + $totp_Period - $currentUnixTime
+							If $totp_diff >= $step[4] Then
+								$totp_Code = String(json_get($totp, '[' & $j & '].Code'))
+								$codeLen = StringLen($totp_Code)
+								If $codeLen <> 6 Then
+									Logger('debug', 'TOTP with leading zeros parsed as: ' & $totp_Code & '. Adding leading zeros back.')
+									$zeros = ''
+									For $s = 1 To (6-$codeLen)
+										$zeros = $zeros & '0'
+									Next
+									$totp_Code = $zeros & $totp_Code
+								EndIf
+								Logger('debug', "Found valid TOTP code, expiring in " & $totp_diff & " seconds")
+								ExitLoop
+							ElseIf $totp_diff < 0 Then
+								Logger('debug', "[TOTP_Lookup] TOTP code is already expired. Diff: " & $totp_diff & ". Checking the next code.")
+								$j += 1
+							Else
+								Logger('debug', "[TOTP_Lookup] TOTP code is closer to expiry than defined minimum " & $step[4] & " seconds. Diff: " & $totp_diff & ". Waiting " & $step[4] & " seconds before checking the next code.")
+								Sleep($step[4]*1000)
+								$j += 1
+							EndIf
+						WEnd
+
+						If $totp_Code = 0 Then
+							Logger('info', "Have not found valid TOTP code, exit.")
+							Exit
 						EndIf
-					WEnd
 
-					If $totp_Code = 0 Then
-						Logger('info', "Have not found valid TOTP code, exit.")
-						Exit
-					EndIf
-
-					While $_WD_HTTPRESULT <> 200
-						_WD_ElementAction($sSession, $element, 'value', $totp_Code)
-						Logger('debug', 'Entered TOTP code ' & $totp_Code & ' into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
-					WEnd
-			EndSwitch
-			$_WD_HTTPRESULT = 0
-		Else
-			Logger('info', 'Cannot parse step: ' & $step & ' -- Exit')
-			Exit
-		EndIf
-	Next
-Else
-	Logger('info', 'Cannot parse selectors: ' & $input & ' -- Exit')
-	Exit
+						While $_WD_HTTPRESULT <> 200
+							_WD_ElementAction($sSession, $element, 'value', $totp_Code)
+							Logger('debug', 'Entered TOTP code ' & $totp_Code & ' into field: ' & $css & ' -- HTTPRESULT: ' & $_WD_HTTPRESULT)
+						WEnd
+				EndSwitch
+				$_WD_HTTPRESULT = 0
+			Else
+				Logger('info', 'Cannot parse step: ' & $step & ' -- Exit')
+				Exit
+			EndIf
+		Next
+	Else
+		Logger('info', 'Cannot parse selectors: ' & $input & ' -- Exit')
+		Exit
+	EndIf
 EndIf
 
 ; Enable user input
