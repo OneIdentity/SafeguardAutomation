@@ -13,3 +13,4 @@ AWS non-root,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {pas
 AWS (via Starling) non-root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c {asset}.signin.aws.amazon.com/console v::#username::{username}||s::#password::{password}||c::#signin_button||o::#mfacode::{Target.TotpCodes}::3||c::#submitMfa_button"
 AWS root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c signin.aws.amazon.com/console v::#resolving_input::{username}||c::#next_button||s::#password::{password}||c::#signin_button||o::#mfaCode::{Target.TotpCodes}::3||c::#mfa_submit_button"
 signin_button #next_button"
+Active Roles WebAdmin Basic Auth,7.3,--cmd "C:\AutoIT\web_generic_3.5.exe" --args "0 c {username}:{password}@{Target.AssetNetworkAddress}/ARWebAdmin basicauth" --enable-debug
