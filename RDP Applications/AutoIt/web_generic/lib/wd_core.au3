@@ -1227,7 +1227,7 @@ EndFunc   ;==>_WD_Option
 ; Name ..........: _WD_Startup
 ; Description ...: Launch the designated web driver console app
 ; Syntax ........: _WD_Startup()
-; Parameters ....: None
+; Parameters ....: $skipWDVersionCheck -- allows skipping _WD_IsLatestRelease connect to Internet
 ; Return values .: Success      - PID for the WD console
 ;                  Failure      - 0
 ;                  @ERROR       - $_WD_ERROR_Success
@@ -1241,7 +1241,7 @@ EndFunc   ;==>_WD_Option
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func _WD_Startup()
+Func _WD_Startup($skipWDVersionCheck)
 	Local Const $sFuncName = "_WD_Startup"
 	Local $sFunction, $bLatest, $sUpdate, $sFile, $pid
 
@@ -1254,23 +1254,25 @@ Func _WD_Startup()
 	Local $sCommand = StringFormat('"%s" %s ', $_WD_DRIVER, $_WD_DRIVER_PARAMS)
 
 	If $_WD_DEBUG = $_WD_DEBUG_Info Then
-		$sFunction = "_WD_IsLatestRelease"
-		$bLatest = Call($sFunction)
+		If $skipWDVersionCheck <> 0 Then
+			$sFunction = "_WD_IsLatestRelease"
+			$bLatest = Call($sFunction)
 
-		Select
-			Case @error = 0xDEAD And @extended = 0xBEEF
-				$sUpdate = "" ; update check not performed
+			Select
+				Case @error = 0xDEAD And @extended = 0xBEEF
+					$sUpdate = "" ; update check not performed
 
-			Case @error
-				$sUpdate = " (Update status unknown [" & @error & "])"
+				Case @error
+					$sUpdate = " (Update status unknown [" & @error & "])"
 
-			Case $bLatest
-				$sUpdate = " (Up to date)"
+				Case $bLatest
+					$sUpdate = " (Up to date)"
 
-			Case Not $bLatest
-				$sUpdate = " (Update available)"
+				Case Not $bLatest
+					$sUpdate = " (Update available)"
 
-		EndSelect
+			EndSelect
+		EndIf
 
 		Local $sWinHttpVer = __WinHttpVer()
 		If $sWinHttpVer < "1.6.4.2" Then
