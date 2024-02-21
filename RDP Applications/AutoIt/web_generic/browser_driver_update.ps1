@@ -112,7 +112,7 @@ function getDriverVersion {
             #TODO
 #        }
 
-        #default actions not needed, already handled in getDriverVersion
+        
 #    }
 #}
 
@@ -139,7 +139,7 @@ function getLatestStableDriverVersion {
             return $latestGecko.name
         }
 
-        #default actions not needed, already handled in getDriverVersion
+       
     }
 
 }
@@ -174,7 +174,7 @@ function getDownloadUrl {
             return "https://github.com/mozilla/geckodriver/releases/download/v" + $version + "/geckodriver-v" + $version + "-" + $platform + ".zip"
         }
 
-        #default actions not needed, already handled in getDriverVersion
+        
     }
 
 }
@@ -206,7 +206,7 @@ function updateDriver {
 
         
 
-        #default actions not needed, already handled in getDriverVersion
+        
     }
 
     try {
