@@ -1,9 +1,16 @@
 Application,Tested Safeguard Version,CMD Executable,Args Parameter
 SQL Studio,7.0,--cmd "C:\AutoIT\sqlstudio.exe",--args "{username} {password} {asset}"
+SQL Studio via SPS,7.1,--cmd "C:\AutoIT\sqlstudio_v2.exe",--args "1 ssmsfolder {username} {password} {asset} 192.168.1.1"
 DBeaver MySQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MySQL-autologon|driver=mysql|user={username}|password={password}|host={asset}"
 DBeaver MSSQL,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "-con name=SG-MSSQL-autologon|driver=mssql_ms|user={username}|password={password}|database=master|host={asset}"
 DBeaver Oracle,7.0,--cmd "C:\Program Files\DBeaver\dbeaver.exe",--args "con name=SG-Oracle-autologon|driver=oracle_thin|url=jdbc:oracle:thin:@{asset}:1521:oracle|user={username}|password={password}"
 Azure Portal,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome portal.azure.com v::#i0116::{username}||c::#idSIButton9||s::#i0118::{password}||c::#idSIButton9||c::#idBtn_Back {asset}"
+Azure Portal with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.3.exe" --args "0 c portal.azure.com v::#i0116::{username}||c::#idSIButton9||s::#i0118::{password}||c::#idSIButton9||o::#idTxtBx_SAOTCC_OTC::{Target.TotpCodes}::5||c::#idSubmit_SAOTCC_Continue||c::#idBtn_Back {asset}"
 Splunk,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} splunk.example.com:8000 #username #password #password input.splButton-primary.btn.btn-primary"
+Splunk,7.0,--cmd "C:\AutoIT\web_generic_3.2.exe",--args "1 chrome splunk.oneidentity.work:443 v::#username::{username}||s::#password::{password}||c::input.splButton-primary.btn.btn-primary {asset}"
 SPS default local user,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} sps.example.com #local-username #local-password #password button.primary"
 AWS non-root,7.0,--cmd "C:\AutoIT\web_generic_2.0.exe",--args "1 {username} {password} {asset} signin.aws.amazon.com/console #resolving_input #password #signin_button #next_button"
+AWS (via Starling) non-root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c {asset}.signin.aws.amazon.com/console v::#username::{username}||s::#password::{password}||c::#signin_button||o::#mfacode::{Target.TotpCodes}::3||c::#submitMfa_button"
+AWS root with TOTP,7.2,--cmd "C:\AutoIT\web_generic_3.4.exe" --args "0 c signin.aws.amazon.com/console v::#resolving_input::{username}||c::#next_button||s::#password::{password}||c::#signin_button||o::#mfaCode::{Target.TotpCodes}::3||c::#mfa_submit_button"
+signin_button #next_button"
+Active Roles WebAdmin Basic Auth,7.3,--cmd "C:\AutoIT\web_generic_3.5.exe" --args "0 c {username}:{password}@{Target.AssetNetworkAddress}/ARWebAdmin basicauth" --enable-debug
